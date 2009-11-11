@@ -2,11 +2,12 @@
 /**
  * TMDb PHP API class - API 'themoviedb.org'
  * API Documentation: http://api.themoviedb.org/2.1/
+ * Documentation and usage in README file
  * 
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
  * @copyright Jonas De Smet - Glamorous
- * @version 0.3
+ * @version 0.4
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -64,7 +65,7 @@ class TMDb
 	{
 		$type = (!empty($format))? $format : $this->defaultFormat();
 		
-		$url = TMDb::API.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.$param;
+		$url = TMDb::API.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
