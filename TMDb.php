@@ -7,7 +7,7 @@
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
  * @copyright Jonas De Smet - Glamorous
- * @version 0.5
+ * @version 0.6
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -15,13 +15,14 @@ class TMDb
 {
 	const TMDB = 'Themoviedb.org (TMDb)';
 	const IMDB = 'The Internet Movie Database (IMDb)';
+	
 	const JSON = 'json';
 	const XML = 'xml';
 	const YAML = 'yaml';
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 	
-	const VERSION = '0.5';
+	const VERSION = '0.6';
 
 	/**
 	 * The API-key
@@ -161,7 +162,7 @@ class TMDb
 	 */
 	public function setFormat($format)
 	{
-		if(in_array($format, $this->formats))
+		if(in_array($format, $this->_formats))
 		{
 			$this->_format = $format;
 		}
@@ -189,7 +190,7 @@ class TMDb
 	 */
 	public function setLang($lang)
 	{
-		if(in_array($lang, $this->languages))
+		if(in_array($lang,$this->_languages))
 		{
 			$this->_lang = $lang;
 		}
