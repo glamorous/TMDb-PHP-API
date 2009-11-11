@@ -7,26 +7,65 @@
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
  * @copyright Jonas De Smet - Glamorous
- * @version 0.4
+ * @version 0.5
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
 class TMDb
 {
-	const TMDB = 'Themoviedb';
-	const IMDB = 'Internet Movie Database';
+	const TMDB = 'Themoviedb.org (TMDb)';
+	const IMDB = 'The Internet Movie Database (IMDb)';
 	const JSON = 'json';
 	const XML = 'xml';
 	const YAML = 'yaml';
 
-	const API = 'http://api.themoviedb.org/2.1/';
-
-	private $_apikey;
-	private $_format;
-	private $_lang;
-	private $_formats = array(TMDb::JSON, TMDb::XML, TMDb::YAML);
-	private $languages = array('en');
+	const API_URL = 'http://api.themoviedb.org/2.1/';
 	
+	const VERSION = '0.5';
+
+	/**
+	 * The API-key
+	 * 
+	 * @var string
+	 */
+	private $_apikey;
+	
+	/**
+	 * The default return format
+	 * 
+	 * @var TMDb::JSON or TMDb::XML or TMDb::YAML
+	 */
+	private $_format;
+	
+	/**
+	 * The default language
+	 * 
+	 * @var string
+	 */
+	private $_lang;
+	
+	/**
+	 * The available return formats
+	 * 
+	 * @var array
+	 */
+	private $_formats = array(TMDb::JSON, TMDb::XML, TMDb::YAML);
+	
+	/**
+	 * The available languages
+	 * 
+	 * @var array
+	 */
+	private $_languages = array('en');
+	
+	/**
+	 * Default constructor
+	 * 
+	 * @param string $apikey					API-key recieved from TMDb
+	 * @param const[optional] $defaultFormat	Default return format
+	 * @param string $defaultLang				Default language
+	 * @return void
+	 */
 	public function __construct($apikey, $defaultFormat = TMDb::JSON, $defaultLang = 'en')
 	{
 		$this->setApikey($apikey);
@@ -34,11 +73,26 @@ class TMDb
 		$this->setLang($defaultLang);
 	}
 
+	/**
+	 * Search a movie by title
+	 * 
+	 * @param string $title						Title to search after in the TMDb database
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
 	public function searchMovie($title, $format = null)
 	{
 		return $this->_makeCall('Movie.search', $title, $format);
 	}
 
+	/**
+	 * Get a movie by TMDb-id or IMDb-id
+	 * 
+	 * @param string $id						TMDb-id or IMDb-id
+	 * @param const[optional] $type				For use with IMDb-id you have to change this parameter to TMDb::IMDB
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
 	public function getMovie($id, $type = TMDb::TMDB, $format = null)
 	{
 		if($type == TMDb::IMDB)
@@ -51,21 +105,43 @@ class TMDb
 		}
 	}
 
+	/**
+	 * Search a person by name
+	 * 
+	 * @param string $name						Name to search after in the TMDb database
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
 	public function searchPerson($name, $format = null)
 	{
 		return $this->_makeCall('Person.search', $name, $format);
 	}
 
+	/**
+	 * Get a person by his TMDb-id
+	 * 
+	 * @param string $id						Persons TMDb-id
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
 	public function getPerson($id, $format = null)
 	{
 		return $this->_makeCall('Person.getInfo', $id, $format);
 	}
 	
+	/**
+	 * Makes the call to the API
+	 * 
+	 * @param string $function					API specific function name for in the URL
+	 * @param string $param						Unencoded paramter for in the URL
+	 * @param const $format						Return format for this function
+	 * @return string
+	 */
 	private function _makeCall($function, $param, $format)
 	{
 		$type = (!empty($format))? $format : $this->defaultFormat();
 		
-		$url = TMDb::API.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
+		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -74,9 +150,15 @@ class TMDb
 		$data = curl_exec();
 		curl_close($ch); 
 		
-		return $data;
+		return (string) $data;
 	}
 	
+	/**
+	 * Setter for the default return format
+	 * 
+	 * @param const $format
+	 * @return void
+	 */
 	public function setFormat($format)
 	{
 		if(in_array($format, $this->formats))
@@ -89,11 +171,22 @@ class TMDb
 		}
 	}
 	
+	/**
+	 * Getter for the default return format
+	 * 
+	 * @return const
+	 */
 	public function getFormat()
 	{
 		return $this->_format;
 	}
 	
+	/**
+	 * Setter for the default language
+	 * 
+	 * @param string $lang
+	 * @return void
+	 */
 	public function setLang($lang)
 	{
 		if(in_array($lang, $this->languages))
@@ -106,19 +199,37 @@ class TMDb
 		}
 	}
 	
+	/**
+	 * Getter for the default language
+	 * 
+	 * @return string
+	 */
+	public function getLang()
+	{
+		return $this->_lang;
+	}
+	
+	/**
+	 * Setter for the API-key
+	 * 
+	 * @param string $apikey
+	 * @return void
+	 */
+	public function setApikey($apikey)
+	{
+		$this->_apikey = (string) $apikey;
+	}
+	
+	/**
+	 * Getter for the API-key
+	 * 
+	 * @return string 
+	 */
 	public function getApikey()
 	{
 		return $this->_apikey;
 	}
 	
-	public function setApikey($apikey)
-	{
-		$this->_apikey = $apikey;
-	}
 	
-	public function getLang()
-	{
-		return $this->_lang;
-	}
 }
 ?>
