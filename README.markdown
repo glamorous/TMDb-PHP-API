@@ -83,6 +83,12 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.7**
+
+- [bug] Calling unknown methods
+- [bug] Changed cURL options
+- tested with success
+
 **TMDb 0.6**
 
 - [bug] Fixed some bugs: calling unknown variables

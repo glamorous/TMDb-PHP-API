@@ -7,7 +7,7 @@
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
  * @copyright Jonas De Smet - Glamorous
- * @version 0.6
+ * @version 0.7
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -22,7 +22,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 	
-	const VERSION = '0.6';
+	const VERSION = '0.7';
 
 	/**
 	 * The API-key
@@ -140,18 +140,26 @@ class TMDb
 	 */
 	private function _makeCall($function, $param, $format)
 	{
-		$type = (!empty($format))? $format : $this->defaultFormat();
+		$type = (!empty($format))? $format : $this->getFormat();
 		
 		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$data = curl_exec();
+		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		
+		$results = curl_exec($ch);
+		$headers = curl_getinfo($ch);
+		
+		$error_number = curl_errno($ch);
+		$error_message = curl_error($ch);
+		
 		curl_close($ch); 
 		
-		return (string) $data;
+		return (string) $results;
 	}
 	
 	/**
