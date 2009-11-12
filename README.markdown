@@ -50,6 +50,22 @@ The second reason why this class is made is very simple: I love the work they do
 		$json_movie_result = $tmdb_yaml->getMovie($imbd_id,TMDb::IMDB,TMDb::JSON);
     ?>
 
+### Get Images from a Movie ###
+
+    <?php
+	    //TMDb id for a movie
+		$tmdb_id = 187; //or $tmdb_id = '187';
+		//IMDb id for a movie
+		$imdb_id = 'tt0137523';
+		
+		//Get Images with default return format and with TMDb-id
+		$xml_movie_result = $tmdb_xml->getImages($tmdb_id);
+		
+		//Get Images with other return format than the default and with an IMDb-id
+		$json_movie_result = $tmdb_yaml->getImages($imbd_id,TMDb::JSON);
+    ?>
+
+
 
 ### Search a Person ###
 
@@ -83,6 +99,10 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.8 - 12/11/2009**
+
+- [feature] Added new API-method: 'Movie.getImages'
+
 **TMDb 0.7**
 
 - [bug] Calling unknown methods
@@ -102,6 +122,9 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 - This is the first version of the class without inline documentation or testing   
 
 ## Feature Requests / To come ##
+
+- Add a debug-variable to check all the steps in the progress
+- Add a error/exception when the API returns nothing or has an error
 
 If you want something to add on this plugin, feel free to fork the project on [github](http://github.com/glamorous/TMDb-PHP-API) or add an [issue](http://github.com/glamorous/TMDb-PHP-API/issues) as a feature request.
 
