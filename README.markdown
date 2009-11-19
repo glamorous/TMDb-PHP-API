@@ -1,4 +1,4 @@
-## TMDb PHP API ##
+# TMDb PHP API #
 
 ## Why this class ##
 
@@ -50,6 +50,18 @@ The second reason why this class is made is very simple: I love the work they do
 		$json_movie_result = $tmdb_yaml->getMovie($imbd_id,TMDb::IMDB,TMDb::JSON);
     ?>
 
+### Get a Movie by Hash ###
+
+You can find more information about movie-hashes on the website from [opensubtitles](http://trac.opensubtitles.org/projects/opensubtitles/wiki/HashSourceCodes).
+
+    <?php
+	    //Hash for a movie
+		$hash = '00277ff46533b155';
+	
+      	//Search Movie by hash with default return format
+      	$json_moviehash_result = $tmdb->getMovieByHash($hash);
+    ?>
+
 ### Get Images from a Movie ###
 
     <?php
@@ -64,8 +76,6 @@ The second reason why this class is made is very simple: I love the work they do
 		//Get Images with other return format than the default and with an IMDb-id
 		$json_movie_result = $tmdb_yaml->getImages($imbd_id,TMDb::JSON);
     ?>
-
-
 
 ### Search a Person ###
 
@@ -98,6 +108,10 @@ The second reason why this class is made is very simple: I love the work they do
 We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
 
 ## Changelog ##
+
+**TMDb 0.9 - 19/11/2009**
+
+- [feature] Added new API-method: 'Hash.getInfo'
 
 **TMDb 0.8 - 12/11/2009**
 

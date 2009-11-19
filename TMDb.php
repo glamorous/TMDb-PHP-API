@@ -7,7 +7,7 @@
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
  * @copyright Jonas De Smet - Glamorous
- * @version 0.8
+ * @version 0.9
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -22,7 +22,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 	
-	const VERSION = '0.8';
+	const VERSION = '0.9';
 
 	/**
 	 * The API-key
@@ -104,6 +104,18 @@ class TMDb
 		{
 			return $this->_makeCall('Movie.getInfo', $id, $format);
 		}
+	}
+	
+	/**
+	 * Get a movie by hash
+	 * 
+	 * @param string $hash						File hash
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getMovieByHash($hash, $format = null)
+	{
+		return $this->_makeCall('Hash.getInfo', $hash, $format);
 	}
 	
 	/**
