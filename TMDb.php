@@ -22,7 +22,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 	
-	const VERSION = '0.9';
+	const VERSION = '0.9.1';
 
 	/**
 	 * The API-key
@@ -168,20 +168,27 @@ class TMDb
 		
 		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
 		
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		
-		$results = curl_exec($ch);
-		$headers = curl_getinfo($ch);
-		
-		$error_number = curl_errno($ch);
-		$error_message = curl_error($ch);
-		
-		curl_close($ch); 
+		if (extension_loaded('curl'))
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			
+			$results = curl_exec($ch);
+			$headers = curl_getinfo($ch);
+			
+			$error_number = curl_errno($ch);
+			$error_message = curl_error($ch);
+			
+			curl_close($ch);
+		}
+		else
+		{
+			$results = file_get_contents($url);
+		}
 		
 		return (string) $results;
 	}
