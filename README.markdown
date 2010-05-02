@@ -109,6 +109,10 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.9.2 - 02/05/2010**
+
+- [bug] deleted CURLOPT_FOLLOWLOCATION that causes errors on shared webhosting
+
 **TMDb 0.9.1 - 27/02/2010**
 
 - [feature] Added support for servers without cURL
