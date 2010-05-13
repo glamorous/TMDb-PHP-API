@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 02.05.2010
+ * @date 13.05.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.2
+ * @version 0.9.3
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.2';
+	const VERSION = '0.9.3';
 
 	/**
 	 * The API-key
@@ -52,13 +52,6 @@ class TMDb
 	 * @var array
 	 */
 	private $_formats = array(TMDb::JSON, TMDb::XML, TMDb::YAML);
-
-	/**
-	 * The available languages
-	 *
-	 * @var array
-	 */
-	private $_languages = array('en');
 
 	/**
 	 * Default constructor
@@ -229,14 +222,7 @@ class TMDb
 	 */
 	public function setLang($lang)
 	{
-		if(in_array($lang,$this->_languages))
-		{
-			$this->_lang = $lang;
-		}
-		else
-		{
-			$this->_lang = 'en';
-		}
+		$this->_lang = $lang;
 	}
 
 	/**
