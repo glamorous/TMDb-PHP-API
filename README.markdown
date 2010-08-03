@@ -103,11 +103,45 @@ You can find more information about movie-hashes on the website from [opensubtit
 		$xml_persons_result = $tmdb_yaml->getPerson($person_id,TMDb::XML);
 	?>
 
+### Get version of one or more Movies ###
+
+    <?php
+		//TMDb id for a movie
+		$tmdb_id = 187; //or $tmdb_id = '187';
+		//IMDb id for a movie
+		$imdb_id = 'tt0137523';
+
+		//Get version of one movie with default return format and with TMDb-id
+		$xml_movieversion_result = $tmdb_xml->getMovieVersion($tmdb_id);
+
+		//Get version of multiple movies with other return format than the default
+		$json_movieversions_result = $tmdb_yaml->getMovieVersions(array($imbd_id, $tmdb_id),TMDb::JSON);
+	?>
+
+### Get version of one or more Persons ###
+
+	<?php
+		//ID in TMDb of an actor/actress or production member
+		$person_id = 500;
+		$person_id2 = 300;
+
+		//Get version of one person with default return format and with TMDb-id
+		$xml_personversion_result = $tmdb_xml->getPersonVersion($person);
+
+		//Get version of multiple persons with other return format than the default
+		$json_personversions_result = $tmdb_yaml->getPersonVersions(array($person_id, $person_id2),TMDb::JSON);
+	?>
+
 ## Issues/Bugs ##
 
 We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
 
 ## Changelog ##
+
+**TMDb 0.9.4 - 04/08/2010**
+
+- [feature] Added new API-method: 'Movie.getVersion'
+- [feature] Added new API-method: 'Person.getVersion'
 
 **TMDb 0.9.3 - 13/05/2010**
 

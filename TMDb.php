@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 13.05.2010
+ * @date 04.08.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.3
+ * @version 0.9.4
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.3';
+	const VERSION = '0.9.4';
 
 	/**
 	 * The API-key
@@ -146,6 +146,54 @@ class TMDb
 	public function getPerson($id, $format = null)
 	{
 		return $this->_makeCall('Person.getInfo', $id, $format);
+	}
+
+	/**
+	 * Get a Movie-version by its TMDb-id or IMDB-id
+	 *
+	 * @param string $id						Movie TMDb-id or IMDB-id
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getMovieVersion($id, $format = null)
+	{
+		return $this->_makeCall('Movie.getVersion', $id, $format);
+	}
+
+	/**
+	 * Get multiple Movie-versions by their TMDb-id or IMDB-id
+	 *
+	 * @param array $ids						Array with Movie TMDb-id's or IMDB-id's
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getMovieVersions(array $ids, $format = null)
+	{
+		return $this->_makeCall('Movie.getVersion', implode(',', $ids), $format);
+	}
+
+	/**
+	 * Get a Person-version by its TMDb-id
+	 *
+	 * @param string $id						Person TMDb-id
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getPersonVersion($id, $format = null)
+	{
+		return $this->_makeCall('Person.getVersion', $id, $format);
+	}
+
+	/**
+	 * Get multiple Person-versions by their TMDb-id
+	 *
+	 * @param array $ids						Array with Person TMDb-id's
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getPersonVersions(array $ids, $format = null)
+	{
+		return $this->_makeCall('Person.getVersion', implode(',', $ids), $format);
 	}
 
 	/**
