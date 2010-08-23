@@ -212,12 +212,59 @@ class TMDb
 
 		if(in_array($order_by, $order_by_container) AND in_array($order, $order_container))
 		{
-			return $this->_makeCall('Movie.browse', implode(',', $params), $format);
+			$params['order_by'] = $order_by;
+			$params['order'] = $order;
+			return $this->_makeCall('Movie.browse', $params, $format);
 		}
 		else
 		{
 			return FALSE;
 		}
+	}
+
+	/**
+	 * Get Movie-translations by its TMDb-id or IMDB-id
+	 *
+	 * @param string $id						Movie TMDb-id or IMDB-id
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getMovieTranslations($id, $format = null)
+	{
+		return $this->_makeCall('Movie.getTranslations', $id, $format);
+	}
+
+	/**
+	 * Get Latest Movie
+	 *
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getLatestMovie($format = null)
+	{
+		return $this->_makeCall('Movie.getLatest', '', $format);
+	}
+
+	/**
+	 * Get Latest Person
+	 *
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getLatestPerson($format = null)
+	{
+		return $this->_makeCall('Person.getLatest', '', $format);
+	}
+
+	/**
+	 * Get Genres
+	 *
+	 * @param const[optional] $format			Return format for this function
+	 * @return string
+	 */
+	public function getGenres($format = null)
+	{
+		return $this->_makeCall('Genres.getList', '', $format);
 	}
 
 	/**
@@ -232,7 +279,8 @@ class TMDb
 	{
 		$type = (!empty($format))? $format : $this->getFormat();
 
-		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().'/'.urlencode($param);
+		$params = (is_array($param) AND ! empty($param)) ? '?'.http_build_query($param) : ($param != '') ? '/'.urlencode($param) : '';
+		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().$params;
 
 		if (extension_loaded('curl'))
 		{
@@ -327,7 +375,5 @@ class TMDb
 	{
 		return $this->_apikey;
 	}
-
-
 }
 ?>
