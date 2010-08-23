@@ -138,6 +138,14 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.9.5 - 24/08/2010**
+
+- [feature] Added new API-method: 'Movie.browse'
+- [feature] Added new API-method: 'Movie.getTranslations'
+- [feature] Added new API-method: 'Movie.getLatest'
+- [feature] Added new API-method: 'Person.getLatest'
+- [feature] Added new API-method: 'Genres.getList'
+
 **TMDb 0.9.4 - 04/08/2010**
 
 - [feature] Added new API-method: 'Movie.getVersion'

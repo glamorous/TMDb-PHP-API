@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 04.08.2010
+ * @date 24.08.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.4
+ * @version 0.9.5
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.4';
+	const VERSION = '0.9.5';
 
 	/**
 	 * The API-key
@@ -194,6 +194,30 @@ class TMDb
 	public function getPersonVersions(array $ids, $format = null)
 	{
 		return $this->_makeCall('Person.getVersion', implode(',', $ids), $format);
+	}
+
+	/**
+	 * Browse movies to get a list ordered by rating/release/title
+	 *
+	 * @param string $order_by					Order by rating, release or title
+	 * @param string $order						Order asc or desc
+	 * @param array[optional] $params			Key => value pairs for optional parameters
+	 * @param const[optional] $format			Return format for this function
+	 * @return mixed
+	 */
+	public function browseMovies($order_by, $order, $params = array(), $format = null)
+	{
+		$order_by_container = array('rating','release','title');
+		$order_container = array('asc','desc');
+
+		if(in_array($order_by, $order_by_container) AND in_array($order, $order_container))
+		{
+			return $this->_makeCall('Movie.browse', implode(',', $params), $format);
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	/**
