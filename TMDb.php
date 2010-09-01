@@ -8,7 +8,7 @@
  * @since 09.11.2009
  * @date 01.09.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.7
+ * @version 0.9.8
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -21,9 +21,12 @@ class TMDb
 	const XML = 'xml';
 	const YAML = 'yaml';
 
+	const POST = 'post';
+	const GET = 'get';
+
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.7';
+	const VERSION = '0.9.8';
 
 	/**
 	 * The API-key
@@ -291,6 +294,25 @@ class TMDb
 	}
 
 	/**
+	 * Add a rating to a movie
+	 *
+	 * @param string $id							TMDb-id or IDMB-id of the Movie
+	 * @param float $rating							A value between 0.0 to 10.0
+	 * @param string $session_key					Session key that you received with getSession
+	 *
+	 * @return string
+	 */
+	public function addMovieRating($id, $rating, $session_key, $format = null)
+	{
+		$params = array(
+			'id' => $id,
+			'rating' => (float) $rating,
+			'session_key' => (string) $session_key,
+		);
+		return $this->_makeCall('Movie.addRating', $params, $format, TMDB::POST);
+	}
+
+	/**
 	 * Makes the call to the API
 	 *
 	 * @param string $function					API specific function name for in the URL
@@ -298,24 +320,40 @@ class TMDb
 	 * @param const $format						Return format for this function
 	 * @return string
 	 */
-	private function _makeCall($function, $param, $format)
+	private function _makeCall($function, $param, $format, $method = TMDB::GET)
 	{
 		$type = (!empty($format))? $format : $this->getFormat();
 
 		$params = '';
-		if(is_array($param) AND ! empty($param))
+
+		if($method == TMDB::GET)
 		{
-			$params .= '?'.http_build_query($param);
+			if(is_array($param) AND ! empty($param))
+			{
+				$params .= '?'.http_build_query($param);
+			}
+			elseif($param != '')
+			{
+				$arr = explode('/', $param);
+				$arr = array_map('urlencode', $arr);
+				$params .= '/'.implode('/', $arr);
+			}
+
+			$lang = (strstr($function,'.', TRUE) !== 'Auth') ? '/'.$this->getLang() : '';
+			$url = TMDb::API_URL.$function.$lang.'/'.$type.'/'.$this->getApikey().$params;
 		}
-		elseif($param != '')
+		elseif($method == TMDB::POST)
 		{
-			$arr = explode('/', $param);
-			$arr = array_map('urlencode', $arr);
-			$params .= '/'.implode('/', $arr);
+			$params = (array) $param;
+			$params['type'] = $type;
+			$params['api_key'] = $this->getApikey();
+
+			$url = TMDb::API_URL.$function;
 		}
 
-		$lang = (strstr($function,'.', TRUE) !== 'Auth') ? '/'.$this->getLang() : '';
-		$url = TMDb::API_URL.$function.$lang.'/'.$type.'/'.$this->getApikey().$params;
+		var_dump($params);
+
+		$results = '';
 
 		if (extension_loaded('curl'))
 		{
@@ -324,6 +362,12 @@ class TMDb
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+
+			if($method == TMDB::POST)
+			{
+				curl_setopt($ch,CURLOPT_POST, 1);
+				curl_setopt($ch,CURLOPT_POSTFIELDS, $params);
+			}
 
 			$results = curl_exec($ch);
 			$headers = curl_getinfo($ch);

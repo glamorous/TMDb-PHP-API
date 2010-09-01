@@ -139,6 +139,10 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.9.8 - 01/09/2010**
+
+- [feature] Added new API-method: 'Movie.addRating'
+
 **TMDb 0.9.7 - 01/09/2010**
 
 - [feature] Added new API-method: 'Auth.getToken'
