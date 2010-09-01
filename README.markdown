@@ -139,6 +139,11 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.9.7 - 01/09/2010**
+
+- [feature] Added new API-method: 'Auth.getToken'
+- [feature] Added new API-method: 'Auth.getSession'
+
 **TMDb 0.9.6 - 01/09/2010**
 
 - [feature] Updated an old API-method with the new one: 'Media.getInfo'

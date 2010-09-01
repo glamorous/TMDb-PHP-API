@@ -8,7 +8,7 @@
  * @since 09.11.2009
  * @date 01.09.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.6
+ * @version 0.9.7
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.6';
+	const VERSION = '0.9.7';
 
 	/**
 	 * The API-key
@@ -270,6 +270,27 @@ class TMDb
 	}
 
 	/**
+	 * Authentication: getToken
+	 *
+	 * @return string
+	 */
+	public function getToken()
+	{
+		$result = json_decode($this->_makeCall('Auth.getToken', '', null), TRUE);
+		return $result['token'];
+	}
+
+	/**
+	 * Authentication: getSession
+	 *
+	 * @return string
+	 */
+	public function getSession($token, $format = null)
+	{
+		return $this->_makeCall('Auth.getSession', $token, $format);
+	}
+
+	/**
 	 * Makes the call to the API
 	 *
 	 * @param string $function					API specific function name for in the URL
@@ -293,8 +314,9 @@ class TMDb
 			$params .= '/'.implode('/', $arr);
 		}
 
-		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().$params;
-var_dump($url);
+		$lang = (strstr($function,'.', TRUE) !== 'Auth') ? '/'.$this->getLang() : '';
+		$url = TMDb::API_URL.$function.$lang.'/'.$type.'/'.$this->getApikey().$params;
+
 		if (extension_loaded('curl'))
 		{
 			$ch = curl_init();
