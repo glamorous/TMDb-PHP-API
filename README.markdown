@@ -56,10 +56,11 @@ You can find more information about movie-hashes on the website from [opensubtit
 
     <?php
 	    //Hash for a movie
-		$hash = '00277ff46533b155';
+		$hash = '8e245d9679d31e12';
+		$bytes = '12909756';
 	
       	//Search Movie by hash with default return format
-      	$json_moviehash_result = $tmdb->getMovieByHash($hash);
+      	$json_moviehash_result = $tmdb->getMovieByHash($hash, $bytes);
     ?>
 
 ### Get Images from a Movie ###
@@ -137,6 +138,10 @@ You can find more information about movie-hashes on the website from [opensubtit
 We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
 
 ## Changelog ##
+
+**TMDb 0.9.6 - 01/09/2010**
+
+- [feature] Updated an old API-method with the new one: 'Media.getInfo'
 
 **TMDb 0.9.5 - 24/08/2010**
 

@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 24.08.2010
+ * @date 01.09.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.5
+ * @version 0.9.6
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.5';
+	const VERSION = '0.9.6';
 
 	/**
 	 * The API-key
@@ -103,13 +103,15 @@ class TMDb
 	/**
 	 * Get a movie by hash
 	 *
-	 * @param string $hash						File hash
+	 * @param string $hash						Hash
+	 * @param string $bytesize					Bitesize
 	 * @param const[optional] $format			Return format for this function
 	 * @return string
 	 */
-	public function getMovieByHash($hash, $format = null)
+	public function getMovieByHash($hash, $bytesize, $format = null)
 	{
-		return $this->_makeCall('Hash.getInfo', $hash, $format);
+
+		return $this->_makeCall('Media.getInfo', $hash.'/'.$bytesize, $format);
 	}
 
 	/**
@@ -279,9 +281,20 @@ class TMDb
 	{
 		$type = (!empty($format))? $format : $this->getFormat();
 
-		$params = (is_array($param) AND ! empty($param)) ? '?'.http_build_query($param) : ($param != '') ? '/'.urlencode($param) : '';
-		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().$params;
+		$params = '';
+		if(is_array($param) AND ! empty($param))
+		{
+			$params .= '?'.http_build_query($param);
+		}
+		elseif($param != '')
+		{
+			$arr = explode('/', $param);
+			$arr = array_map('urlencode', $arr);
+			$params .= '/'.implode('/', $arr);
+		}
 
+		$url = TMDb::API_URL.$function.'/'.$this->getLang().'/'.$type.'/'.$this->getApikey().$params;
+var_dump($url);
 		if (extension_loaded('curl'))
 		{
 			$ch = curl_init();
