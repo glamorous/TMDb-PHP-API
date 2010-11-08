@@ -139,6 +139,10 @@ We didn't find any bugs (yet). If you find one, please inform us with the issue 
 
 ## Changelog ##
 
+**TMDb 0.9.9 - 09/11/2010**
+
+- [bug] removed a var_dump that slipped trough the previous version
+
 **TMDb 0.9.8 - 01/09/2010**
 
 - [feature] Added new API-method: 'Movie.addRating'

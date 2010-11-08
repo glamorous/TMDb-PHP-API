@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 01.09.2010
+ * @date 09.11.2010
  * @copyright Jonas De Smet - Glamorous
- * @version 0.9.8
+ * @version 0.9.9
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -350,8 +350,6 @@ class TMDb
 
 			$url = TMDb::API_URL.$function;
 		}
-
-		var_dump($params);
 
 		$results = '';
 
