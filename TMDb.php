@@ -26,7 +26,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/2.1/';
 
-	const VERSION = '0.9.8';
+	const VERSION = '0.9.9';
 
 	/**
 	 * The API-key
