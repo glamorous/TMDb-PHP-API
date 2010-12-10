@@ -5,6 +5,12 @@
 Because of the lack of a general and recent php class (api 2.1) for TMDb. The CakePHP class is outdated and doesn't provide you to search for people. With this class you can search and get Movie and People information.  
 The second reason why this class is made is very simple: I love the work they do at [TMDb](http://themoviedb.org). They provide a great API so everyone can use there database to make cool applications.
 
+## Requirements ##
+
+- PHP 5.2.x or higher
+- cURL
+- TMDb API-key
+
 ## How to use ##
 
 ### Initialize the class ###
@@ -138,6 +144,10 @@ You can find more information about movie-hashes on the website from [opensubtit
 We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
 
 ## Changelog ##
+
+**TMDb 0.9.10 - 10/12/2010**
+
+- [bug] Code give a warning with a version below 5.3 so a little code change had to happen to fix that issue. We support PHP 5.2.x
 
 **TMDb 0.9.9 - 09/11/2010**
 
