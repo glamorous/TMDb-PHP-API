@@ -2,8 +2,7 @@
 
 ## Why this class ##
 
-Because of the lack of a general and recent php class (api 2.1) for TMDb. The CakePHP class is outdated and doesn't provide you to search for people. With this class you can search and get Movie and People information.  
-The second reason why this class is made is very simple: I love the work they do at [TMDb](http://themoviedb.org). They provide a great API so everyone can use there database to make cool applications.
+This class has been started with the old API version (2.1) because of the lack of a general and recent php class for TMDb in the time. The second reason why this class is made is very simple: I love the work they do at [TMDb](http://themoviedb.org). They provide a great API so everyone can use there database to make cool applications. Now there's a new API v3 and it's supported too. The old version you can find in a [different branch at github](https://github.com/glamorous/TMDb-PHP-API/tree/apiv2).
 
 ## Requirements ##
 
@@ -11,218 +10,166 @@ The second reason why this class is made is very simple: I love the work they do
 - cURL
 - TMDb API-key
 
+## Available methods ##
+
+All methods are listed here, for use, look into the code, everything is documentated. Optional parameters are between brackets []. Also look into the TMDb-documentation for better unstanding of the possible methods.
+
+### Collection ###
+
+- getCollection($id, [$lang])
+
+### Company ###
+
+- searchCompany($query, [$page])
+- getMoviesByCompany($id, [$page], [$lang])
+
+### Genres ###
+
+- getGenres([$lang])
+- getMoviesByGenre($id, [$page], [$lang])
+
+### Movies ###
+
+- searchMovie($query, [$page], [$adult], [$lang])
+- getMovie($id, [$lang])
+- getMovieCast($id)
+- getMovieImages($id, [$lang])
+- getMovieKeywords($id)
+- getMovieReleases($id)
+- getMovieTitles($id, [$country])
+- getMovieTranslations($id)
+- getMoviesByCompany($id, [$page], [$lang])
+- getMoviesByGenre($id, [$page], [$lang])
+- getLatestMovie()
+- getTopRatedMovies([$page], [$lang])
+- getPopularMovies([$page], [$lang])
+- getUpcomingMovies([$page], [$lang])
+- getNowPlayingMovies([$page], [$lang])
+- getSimularMovies($id, [$page], [$lang])
+
+### Persons ###
+
+- searchPerson($query, [$page], [$adult])
+- getPerson($id)
+- getPersonCredits($id, [$lang])
+- getPersonImages($id)
+
+### Authentication ###
+
+- getAuthToken()
+- getAuthSession($token)
+- setAuthSession($id)
+
+### Account ###
+
+- addFavoriteMovie($account_id, $session_id, $movie_id, TRUE)
+- addMovieRating($session_id, $movie_id, $value)
+- addMovieToWatchlist($account_id, $session_id, $movie_id)
+- getAccount($session_id)
+- getAccountFavoriteMovies($account_id, $session_id, [$page], [$lang])
+- getAccountRatedMovies($account_id, $session_id, [$page], [$lang])
+- getAccountWatchlistMovies($account_id, $session_id, [$page], [$lang])
+
+### Misc ###
+
+- getAvailableImageSizes($imagetype)
+- getConfig()
+- getConfiguration()
+- getImageUrl($filepath, $imagetype, $size)
+- getLang()
+- setLang($languague)
+
 ## How to use ##
 
 ### Initialize the class ###
 
     <?php
-	    include('TMDb.php');
-	    
-	    //'json' is set as default return format
-	    $tmdb = new TMDb('API-key'); //change 'API-key' with yours
-	    
-	    //if you prefer using 'xml'
-	    $tmdb_xml = new TMDb('API-key',TMDb::XML);
-	    
-	    //or even 'yaml'
-	    $tmdb_yaml = new TMDb('API-key',TMDb::YAML);
+        include('TMDb.php');
+
+        // Default English language
+        $tmdb = new TMDb('API-key');
+
+        // Set-up the class with your own language
+        $tmdb_nl = new TMDb('API-key', 'nl');
+
+        // If you want to load the TMDb-config (default FALSE)
+        $tmdb_load_config = new TMDb('API-key', 'en', TRUE);
 	?>
 
-### Search a Movie ###
+### Authentication ###
+
+It's important to read the TMDb-documentation about this one. The necessary methods are available to retrieve a valid token and session_id (more information on the [TMDb Knowledge Base](http://help.themoviedb.org/kb/api/user-authentication))
 
     <?php
-		//Title to search for
-		$title = 'Orphan';
-		
-		//Search Movie with default return format
-		$xml_movies_result = $tmdb_xml->searchMovie($title);
-		
-		//Search Movie with other return format than the default
-		$json_movies_result = $tmdb_yaml->searchMovie($title,TMDb::JSON);
+        // After initialize the class
+        // First request a token from API
+        $token = $tmdb->getAuthToken();
     ?>
 
-### Get a Movie ###
+Then you have to redirect the user to TMDb-website with the `Authentication-Callback` find in the `$token`-variable received from the method `getAuthToken` so the user can autorise your app.
 
     <?php
-	    //TMDb id for a movie
-		$tmdb_id = 187; //or $tmdb_id = '187';
-		//IMDb id for a movie
-		$imdb_id = 'tt0137523';
-		
-		//Get Movie with default return format and with TMDb-id
-		$xml_movie_result = $tmdb_xml->getMovie($tmdb_id);
-		
-		//Get Movie with other return format than the default and with an IMDb-id
-		$json_movie_result = $tmdb_yaml->getMovie($imbd_id,TMDb::IMDB,TMDb::JSON);
+		// Request valid session for that particular user from API
+		$session = $tmdb->getAuthSession();
     ?>
 
-### Get a Movie by Hash ###
+Store the session_id securely for that particular user and use it for authenticated calls.
 
-You can find more information about movie-hashes on the website from [opensubtitles](http://trac.opensubtitles.org/projects/opensubtitles/wiki/HashSourceCodes).
+IF you have saved the session_id, you can use it (optional) set it with every authenticated request for every user or you can set it globally with the method `setAuthSession`.
+
+### Configuration ###
+
+The configuration is something new in API v3. It's used to retrieve information from TMDb so you only have to request it once. It's your task to save it (or cache) and sometimes retrieve a new version.
 
     <?php
-	    //Hash for a movie
-		$hash = '8e245d9679d31e12';
-		$bytes = '12909756';
-	
-      	//Search Movie by hash with default return format
-      	$json_moviehash_result = $tmdb->getMovieByHash($hash, $bytes);
+	    //Retrieve config with initialisation of the class
+		$tmdb = new TMDb('API-key', 'en', TRUE);
     ?>
 
-### Get Images from a Movie ###
-
     <?php
-	    //TMDb id for a movie
-		$tmdb_id = 187; //or $tmdb_id = '187';
-		//IMDb id for a movie
-		$imdb_id = 'tt0137523';
-		
-		//Get Images with default return format and with TMDb-id
-		$xml_movie_result = $tmdb_xml->getImages($tmdb_id);
-		
-		//Get Images with other return format than the default and with an IMDb-id
-		$json_movie_result = $tmdb_yaml->getImages($imbd_id,TMDb::JSON);
+	    //Retrieve (cached) config when the class is already initialised
+		$config = $tmdb->getConfig();
     ?>
 
-### Search a Person ###
+    <?php
+	    //Retrieve config when the class is already initialised from TMDb (always new request)
+		$config = $tmdb->getConfiguration();
+    ?>
 
-	<?php
-		//Name of an actor/actress or production member
-		$name = 'Jack Black';
-		
-		//Search Person with default return format
-		$json_persons_result = $tmdb->searchPerson($name);
-		
-		//Search Person with other return format than the default
-		$xml_persons_result = $tmdb_yaml->getMovie($name,TMDb::XML);
-	?>
+### Images ###
 
-### Get a Person ###
-
-	<?php
-		//ID in TMDb of an actor/actress or production member
-		$person_id = 500;
-		
-		//Get Person with default return format
-		$json_persons_result = $tmdb->getPerson($person_id);
-		
-		//Search Person with other return format than the default
-		$xml_persons_result = $tmdb_yaml->getPerson($person_id,TMDb::XML);
-	?>
-
-### Get version of one or more Movies ###
+The way to retrieve images is a little bit different then before. You retrieve filepaths in you request. To parse an url you need to use the configuration and some extra methods.
 
     <?php
-		//TMDb id for a movie
-		$tmdb_id = 187; //or $tmdb_id = '187';
-		//IMDb id for a movie
-		$imdb_id = 'tt0137523';
+	    //Filepath retrieved from a method (Backdrop image)
+		$filepath = '/eJhymb0SiOd39L3BDe7aO7iQhQx.jpg';
 
-		//Get version of one movie with default return format and with TMDb-id
-		$xml_movieversion_result = $tmdb_xml->getMovieVersion($tmdb_id);
+		//Get image URL for the backdrop image in its original size
+		$image_url = $tmdb->getImageUrl($filepath, TMDb::IMAGE_BACKDROP, 'original');
+    ?>
 
-		//Get version of multiple movies with other return format than the default
-		$json_movieversions_result = $tmdb_yaml->getMovieVersions(array($imbd_id, $tmdb_id),TMDb::JSON);
-	?>
+There are now 3 formats available for the images: `TMDb::IMAGE_BACKDROP`, `TMDb::IMAGE_POSTER`, `TMDb::IMAGE_PROFILE`. To retrieve all available image size for a particular imagetype you can use the method `getAvailableImageSizes`.
 
-### Get version of one or more Persons ###
-
-	<?php
-		//ID in TMDb of an actor/actress or production member
-		$person_id = 500;
-		$person_id2 = 300;
-
-		//Get version of one person with default return format and with TMDb-id
-		$xml_personversion_result = $tmdb_xml->getPersonVersion($person);
-
-		//Get version of multiple persons with other return format than the default
-		$json_personversions_result = $tmdb_yaml->getPersonVersions(array($person_id, $person_id2),TMDb::JSON);
-	?>
+    <?php
+	    //Get all possible image sizes for backdrop images.
+		$array_with_backdrop_sizes = $tmdb->getAvailableImageSizes(TMDb::IMAGE_BACKDROP);
+    ?>
 
 ## Issues/Bugs ##
 
-We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
+It's always possible to find some issues. If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues). Please don't use this to ask question how to use this class. It's straight forward and easy to understand for everyone with a basic knowledge of PHP.
 
 ## Changelog ##
 
-**TMDb 0.9.10 - 10/12/2010**
+**TMDb 1.0.0 - 30/07/2012**
 
-- [bug] Code give a warning with a version below 5.3 so a little code change had to happen to fix that issue. We support PHP 5.2.x
+- The class works now only with API v3.
+- All available methods from API v3 are supported by the API
+- Old changelog (API v2) is available at [github](https://github.com/glamorous/TMDb-PHP-API/tree/apiv2)
 
-**TMDb 0.9.9 - 09/11/2010**
+## Handle Errors ##
 
-- [bug] removed a var_dump that slipped trough the previous version
-
-**TMDb 0.9.8 - 01/09/2010**
-
-- [feature] Added new API-method: 'Movie.addRating'
-
-**TMDb 0.9.7 - 01/09/2010**
-
-- [feature] Added new API-method: 'Auth.getToken'
-- [feature] Added new API-method: 'Auth.getSession'
-
-**TMDb 0.9.6 - 01/09/2010**
-
-- [feature] Updated an old API-method with the new one: 'Media.getInfo'
-
-**TMDb 0.9.5 - 24/08/2010**
-
-- [feature] Added new API-method: 'Movie.browse'
-- [feature] Added new API-method: 'Movie.getTranslations'
-- [feature] Added new API-method: 'Movie.getLatest'
-- [feature] Added new API-method: 'Person.getLatest'
-- [feature] Added new API-method: 'Genres.getList'
-
-**TMDb 0.9.4 - 04/08/2010**
-
-- [feature] Added new API-method: 'Movie.getVersion'
-- [feature] Added new API-method: 'Person.getVersion'
-
-**TMDb 0.9.3 - 13/05/2010**
-
-- deleted the private variable for available languages because the API fall back on the default 'en'
-
-**TMDb 0.9.2 - 02/05/2010**
-
-- [bug] deleted CURLOPT_FOLLOWLOCATION that causes errors on shared webhosting
-
-**TMDb 0.9.1 - 27/02/2010**
-
-- [feature] Added support for servers without cURL
-
-**TMDb 0.9 - 19/11/2009**
-
-- [feature] Added new API-method: 'Hash.getInfo'
-
-**TMDb 0.8 - 12/11/2009**
-
-- [feature] Added new API-method: 'Movie.getImages'
-
-**TMDb 0.7**
-
-- [bug] Calling unknown methods
-- [bug] Changed cURL options
-- tested with success
-
-**TMDb 0.6**
-
-- [bug] Fixed some bugs: calling unknown variables
-- Provided inline documentation
-- Added a README file
-- Added a license.txt
-- Still not tested
-  
-**TMDb 0.5**
-
-- This is the first version of the class without inline documentation or testing   
-
-## Feature Requests / To come ##
-
-- Add a debug-variable to check all the steps in the progress
-- Add a error/exception when the API returns nothing or has an error
-
-If you want something to add on this plugin, feel free to fork the project on [github](http://github.com/glamorous/TMDb-PHP-API) or add an [issue](http://github.com/glamorous/TMDb-PHP-API/issues) as a feature request.
+This class throws an TMDbException when an error is in the class is made by the CURL request or if there's a problem with the TMDb-API).
 
 ## License ##
 
