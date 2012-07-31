@@ -174,3 +174,5 @@ This class throws an TMDbException when an error is in the class is made by the 
 ## License ##
 
 This plugin has a [BSD License](http://www.opensource.org/licenses/bsd-license.php). You can find the license in license.txt that is included with class-package
+
+![githalytics.com alpha](https://cruel-carlota.pagodabox.com/f811fcf46375695910a6d5987d15a55f)
