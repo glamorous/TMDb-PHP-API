@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 30.07.2012
+ * @date 01.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.0.0
+ * @version 1.0.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -596,7 +596,7 @@ class TMDb
 	{
 		$session_id = ($session_id === NULL) ? $this->_session_id : $session_id;
 		$params = array(
-			'value' => floatval($value),
+			'value' => is_numeric($value) ? floatval($value) : 0,
 		);
 		return $this->_makeCall('movie/'.$movie_id.'/rating', $params, $session_id, TMDb::POST);
 	}
@@ -713,6 +713,8 @@ class TMDb
 				curl_setopt($ch,CURLOPT_POSTFIELDS, $json_string);
 				$headers[] = 'Content-Type: application/json';
 				$headers[] = 'Content-Length: '.strlen($json_string);
+
+				var_dump($json_string);
 			}
 
 			curl_setopt($ch, CURLOPT_URL, $url);

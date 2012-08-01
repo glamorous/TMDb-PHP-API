@@ -161,6 +161,10 @@ It's always possible to find some issues. If you find one, please inform us with
 
 ## Changelog ##
 
+**TMDb 1.0.1 - 01/08/2012**
+
+- [improvement] `addMovieRating` works better now, whatever you pass trough, it's been casted to `0` or a decent float.
+
 **TMDb 1.0.0 - 30/07/2012**
 
 - The class works now only with API v3.
