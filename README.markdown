@@ -161,6 +161,10 @@ It's always possible to find some issues. If you find one, please inform us with
 
 ## Changelog ##
 
+**TMDb 1.0.2 - 07/08/2012**
+
+- [bug] On some recent servers the `&` were replaced with `&amp;` so a `POST` to an old Tomcat java server wouldn't be properly handled. (Closed issue #9)
+
 **TMDb 1.0.1 - 01/08/2012**
 
 - [improvement] `addMovieRating` works better now, whatever you pass trough, it's been casted to `0` or a decent float.

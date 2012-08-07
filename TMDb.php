@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 01.08.2012
+ * @date 07.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.0.1
+ * @version 1.0.2
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.2';
 
 	/**
 	 * The API-key
@@ -689,11 +689,11 @@ class TMDb
 			$auth_array['session_id'] = $session_id;
 		}
 
-		$url = TMDb::API_URL.$function.'?'.http_build_query($auth_array);
+		$url = TMDb::API_URL.$function.'?'.http_build_query($auth_array, '', '&');
 
 		if($method === TMDb::GET)
 		{
-			$url .= ( ! empty($params)) ? '&'.http_build_query($params) : '';
+			$url .= ( ! empty($params)) ? '&'.http_build_query($params, '', '&') : '';
 		}
 
 		$results = '{}';
