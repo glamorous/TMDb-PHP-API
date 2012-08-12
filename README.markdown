@@ -37,6 +37,7 @@ All methods are listed here, for use, look into the code, everything is document
 - getMovieKeywords($id)
 - getMovieReleases($id)
 - getMovieTitles($id, [$country])
+- getMovieTrailers($id, [$lang])
 - getMovieTranslations($id)
 - getMoviesByCompany($id, [$page], [$lang])
 - getMoviesByGenre($id, [$page], [$lang])
