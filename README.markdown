@@ -161,6 +161,10 @@ It's always possible to find some issues. If you find one, please inform us with
 
 ## Changelog ##
 
+**TMDb 1.1.0 - 12/08/2012**
+
+- [feature] New method for retrieving movie trailers: `getMovieTrailers` It was being forgotten in the first release for the new API (Closed issue #10)
+
 **TMDb 1.0.2 - 07/08/2012**
 
 - [bug] On some recent servers the `&` were replaced with `&amp;` so a `POST` to an old Tomcat java server wouldn't be properly handled. (Closed issue #9)

@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 07.08.2012
+ * @date 12.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.0.2
+ * @version 1.1.0
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.0.2';
+	const VERSION = '1.1.0';
 
 	/**
 	 * The API-key
@@ -214,6 +214,21 @@ class TMDb
 	public function getMovieTranslations($id)
 	{
 		return $this->_makeCall('movie/'.$id.'/translations');
+	}
+
+	/**
+	 * Retrieve available trailers for a particular movie
+	 *
+	 * @param mixed $id					TMDb-id or IMDB-id
+	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @return TMDb result array
+	 */
+	public function getMovieTrailers($id, $lang = NULL)
+	{
+		$params = array(
+			'language' => ($lang !== NULL) ? $lang : $this->getLang(),
+		);
+		return $this->_makeCall('movie/'.$id.'/trailers', $params);
 	}
 
 	/**
