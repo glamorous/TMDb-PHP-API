@@ -162,6 +162,10 @@ It's always possible to find some issues. If you find one, please inform us with
 
 ## Changelog ##
 
+**TMDb 1.1.1 - 20/08/2012**
+
+- [bug] Deleted some debugging content
+
 **TMDb 1.1.0 - 12/08/2012**
 
 - [feature] New method for retrieving movie trailers: `getMovieTrailers` It was being forgotten in the first release for the new API (Closed issue #10)

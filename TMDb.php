@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 12.08.2012
+ * @date 20.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.1.0
+ * @version 1.1.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.1.0';
+	const VERSION = '1.1.1';
 
 	/**
 	 * The API-key
@@ -728,8 +728,6 @@ class TMDb
 				curl_setopt($ch,CURLOPT_POSTFIELDS, $json_string);
 				$headers[] = 'Content-Type: application/json';
 				$headers[] = 'Content-Length: '.strlen($json_string);
-
-				var_dump($json_string);
 			}
 
 			curl_setopt($ch, CURLOPT_URL, $url);
