@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 21.08.2012
+ * @date 22.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.2.0
+ * @version 1.3.0
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -16,6 +16,7 @@ class TMDb
 {
 	const POST = 'post';
 	const GET = 'get';
+	const HEAD = 'head';
 
 	const IMAGE_BACKDROP = 'backdrop';
 	const IMAGE_POSTER = 'poster';
@@ -23,7 +24,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.2.0';
+	const VERSION = '1.3.0';
 
 	/**
 	 * The API-key
@@ -686,6 +687,18 @@ class TMDb
 	}
 
 	/**
+	 * Get ETag to keep track of state of the content
+	 *
+	 * @param string $uri				Use an URI to know the version of it. For example: 'movie/550'
+	 * @return string
+	 */
+	public function getVersion($uri)
+	{
+		$headers = $this->_makeCall($uri, NULL, NULL, TMDb::HEAD);
+		return isset($headers['Etag']) ? $headers['Etag'] : '';
+	}
+
+	/**
 	 * Makes the call to the API
 	 *
 	 * @param string $function			API specific function name for in the URL
@@ -734,6 +747,11 @@ class TMDb
 				$headers[] = 'Content-Type: application/json';
 				$headers[] = 'Content-Length: '.strlen($json_string);
 			}
+			elseif($method == TMDb::HEAD)
+			{
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'HEAD');
+				curl_setopt($ch, CURLOPT_NOBODY, 1);
+			}
 
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -772,6 +790,10 @@ class TMDb
 		if($results !== NULL)
 		{
 			return $results;
+		}
+		elseif($method == TMDb::HEAD)
+		{
+			return $this->_http_parse_headers($header);
 		}
 		else
 		{

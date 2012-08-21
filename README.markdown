@@ -79,6 +79,7 @@ All methods are listed here, for use, look into the code, everything is document
 - getImageUrl($filepath, $imagetype, $size)
 - getLang()
 - setLang($languague)
+- getVersion($uri)
 
 ## How to use ##
 
@@ -156,11 +157,24 @@ There are now 3 formats available for the images: `TMDb::IMAGE_BACKDROP`, `TMDb:
 		$array_with_backdrop_sizes = $tmdb->getAvailableImageSizes(TMDb::IMAGE_BACKDROP);
     ?>
 
+### Versions ###
+
+With the new version of the API (v3) there aren't specific methods to track the state of a movie or a person. Like [TMDb suggested](http://help.themoviedb.org/kb/api/content-versioning) you can now use the header information, especially the ETag to check the state of the content of a specific method.
+
+    <?php
+	    //Just add some URI to the method to retrieve the ETag of the request.
+		$etag = $tmdb->getVersion('movie/550');
+    ?>
+
 ## Issues/Bugs ##
 
 It's always possible to find some issues. If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues). Please don't use this to ask question how to use this class. It's straight forward and easy to understand for everyone with a basic knowledge of PHP.
 
 ## Changelog ##
+
+**TMDb 1.3.0 - 22/08/2012**
+
+- [feature] Get ETag from a method to keep track of state of content, for more information go to [TMDb kb-article](http://help.themoviedb.org/kb/api/content-versioning)
 
 **TMDb 1.2.0 - 21/08/2012**
 
