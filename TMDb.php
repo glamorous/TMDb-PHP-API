@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 20.08.2012
+ * @date 21.08.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.1.1
+ * @version 1.2.0
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -23,7 +23,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.1.1';
+	const VERSION = '1.2.0';
 
 	/**
 	 * The API-key
@@ -78,7 +78,7 @@ class TMDb
 	 * @param string $text				Query to search after in the TMDb database
 	 * @param int $page					Number of the page with results (default first page)
 	 * @param bool $adult				Whether of not to include adult movies in the results (default FALSE)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function searchMovie($query, $page = 1, $adult = FALSE, $year = NULL, $lang = NULL)
@@ -131,7 +131,7 @@ class TMDb
 	 * Retrieve information about a collection
 	 *
 	 * @param int $id					Id from a collection (retrieved with getMovie)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getCollection($id, $lang = NULL)
@@ -146,7 +146,7 @@ class TMDb
 	 * Retrieve all basic information for a particular movie
 	 *
 	 * @param mixed $id					TMDb-id or IMDB-id
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getMovie($id, $lang = NULL)
@@ -220,7 +220,7 @@ class TMDb
 	 * Retrieve available trailers for a particular movie
 	 *
 	 * @param mixed $id					TMDb-id or IMDB-id
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getMovieTrailers($id, $lang = NULL)
@@ -235,7 +235,7 @@ class TMDb
 	 * Retrieve all images for a particular movie
 	 *
 	 * @param mixed $id					TMDb-id or IMDB-id
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getMovieImages($id, $lang = NULL)
@@ -251,7 +251,7 @@ class TMDb
 	 *
 	 * @param mixed $id					TMDb-id or IMDB-id
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getSimilarMovies($id, $page = 1, $lang = NULL)
@@ -277,7 +277,7 @@ class TMDb
 	 * Retrieve movies arriving to theatres within the next few weeks
 	 *
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getUpcomingMovies($page = 1, $lang = NULL)
@@ -293,7 +293,7 @@ class TMDb
 	 * Retrieve movies currently in theatres
 	 *
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getNowPlayingMovies($page = 1, $lang = NULL)
@@ -309,7 +309,7 @@ class TMDb
 	 * Retrieve popular movies (list is updated daily)
 	 *
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getPopularMovies($page = 1, $lang = NULL)
@@ -325,7 +325,7 @@ class TMDb
 	 * Retrieve top-rated movies
 	 *
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getTopRatedMovies($page = 1, $lang = NULL)
@@ -352,7 +352,7 @@ class TMDb
 	 * Retrieve all cast and crew information for a particular person
 	 *
 	  * @param int $id					TMDb person-id
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getPersonCredits($id, $lang = NULL)
@@ -390,7 +390,7 @@ class TMDb
 	 *
 	 * @param int $id					TMDb company-id
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getMoviesByCompany($id, $page = 1, $lang = NULL)
@@ -405,7 +405,7 @@ class TMDb
 	/**
 	 * Retrieve a list of genres used on TMDb
 	 *
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getGenres($lang = NULL)
@@ -421,7 +421,7 @@ class TMDb
 	 *
 	 * @param int $id					TMDb genre-id
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default (ISO 3166-1)
+	 * @param mixed $lang				Filter the result with a language (ISO 3166-1) other then default, use FALSE to retrieve results from all languages
 	 * @return TMDb result array
 	 */
 	public function getMoviesByGenre($id, $page = 1, $lang = NULL)
@@ -510,7 +510,7 @@ class TMDb
 	 * @param int $account_id			TMDb account-id
 	 * @param string $session_id		Set session_id for the account you want to retrieve information from
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default for this user account (ISO 3166-1)
+	 * @param mixed $lang				Get result in other language then default for this user account (ISO 3166-1)
 	 * @return TMDb result array
 	 */
 	public function getAccountFavoriteMovies($account_id, $session_id = NULL, $page = 1, $lang = FALSE)
@@ -529,7 +529,7 @@ class TMDb
 	 * @param int $account_id			TMDb account-id
 	 * @param string $session_id		Set session_id for the account you want to retrieve information from
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default for this user account (ISO 3166-1)
+	 * @param mixed $lang				Get result in other language then default for this user account (ISO 3166-1)
 	 * @return TMDb result array
 	 */
 	public function getAccountRatedMovies($account_id, $session_id = NULL, $page = 1, $lang = FALSE)
@@ -548,7 +548,7 @@ class TMDb
 	 * @param int $account_id			TMDb account-id
 	 * @param string $session_id		Set session_id for the account you want to retrieve information from
 	 * @param int $page					Number of the page with results (default first page)
-	 * @param string $lang				Get result in other language then default for this user account (ISO 3166-1)
+	 * @param mixed $lang				Get result in other language then default for this user account (ISO 3166-1)
 	 * @return TMDb result array
 	 */
 	public function getAccountWatchlistMovies($account_id, $session_id = NULL, $page = 1, $lang = FALSE)
@@ -708,6 +708,11 @@ class TMDb
 
 		if($method === TMDb::GET)
 		{
+			if(isset($params['language']) AND $params['language'] === FALSE)
+			{
+				unset($params['language']);
+			}
+
 			$url .= ( ! empty($params)) ? '&'.http_build_query($params, '', '&') : '';
 		}
 

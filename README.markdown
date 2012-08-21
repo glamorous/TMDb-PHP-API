@@ -162,6 +162,10 @@ It's always possible to find some issues. If you find one, please inform us with
 
 ## Changelog ##
 
+**TMDb 1.2.0 - 21/08/2012**
+
+- [bug][feature] It wasn't possible to use some methods without a language parameter. Now you can pass `FALSE` to it to retrieve all the results without thinking about any language.
+
 **TMDb 1.1.1 - 20/08/2012**
 
 - [bug] Deleted some debugging content
