@@ -57,7 +57,7 @@ class TMDb
 	 * Default constructor
 	 *
 	 * @param string $apikey			API-key recieved from TMDb
-	 * @param string $defaultLang		Default language
+	 * @param string $defaultLang		Default language (ISO 3166-1)
 	 * @param boolean $config			Load the TMDb-config
 	 * @return void
 	 */
@@ -777,7 +777,7 @@ class TMDb
 	/**
 	 * Setter for the default language
 	 *
-	 * @param string $lang
+	 * @param string $lang		(ISO 3166-1)
 	 * @return void
 	 */
 	public function setLang($lang)
