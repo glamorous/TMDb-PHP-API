@@ -47,6 +47,8 @@ All methods are listed here, for use, look into the code, everything is document
 - getUpcomingMovies([$page], [$lang])
 - getNowPlayingMovies([$page], [$lang])
 - getSimularMovies($id, [$page], [$lang])
+- getChangedMovies([$page], [$start_date], [$end_date])
+- getMovieChanges($id)
 
 ### Persons ###
 
@@ -54,6 +56,8 @@ All methods are listed here, for use, look into the code, everything is document
 - getPerson($id)
 - getPersonCredits($id, [$lang])
 - getPersonImages($id)
+- getChangedPersons([$page], [$start_date], [$end_date])
+- getPersonChanges($id)
 
 ### Authentication ###
 
@@ -171,6 +175,13 @@ With the new version of the API (v3) there aren't specific methods to track the 
 It's always possible to find some issues. If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues). Please don't use this to ask question how to use this class. It's straight forward and easy to understand for everyone with a basic knowledge of PHP.
 
 ## Changelog ##
+
+**TMDb 1.4.0 - 11/10/2012**
+
+- [feature] New method for retrieving a movie changes: `getMovieChanges`
+- [feature] New method for retrieving all changed movies: `getChangedMovies`
+- [feature] New method for retrieving a person changes: `getPersonChanges`
+- [feature] New method for retrieving all changed persons: `getChangedPersons`
 
 **TMDb 1.3.0 - 22/08/2012**
 

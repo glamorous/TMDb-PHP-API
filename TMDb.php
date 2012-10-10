@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 22.08.2012
+ * @date 11.10.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.3.0
+ * @version 1.4.0
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -24,7 +24,7 @@ class TMDb
 
 	const API_URL = 'http://api.themoviedb.org/3/';
 
-	const VERSION = '1.3.0';
+	const VERSION = '1.4.0';
 
 	/**
 	 * The API-key
@@ -339,6 +339,35 @@ class TMDb
 	}
 
 	/**
+	 * Retrieve changes for a particular movie
+	 *
+	 * @param mixed $id					TMDb-id or IMDB-id
+	 * @return TMDb result array
+	 */
+	public function getMovieChanges($id)
+	{
+		return $this->_makeCall('movie/'.$id.'/changes');
+	}
+
+	/**
+	 * Retrieve all id's from changed movies
+	 *
+	 * @param int $page					Number of the page with results (default first page)
+	 * @param string $start_date		String start date as YYYY-MM-DD
+	 * @param string $end_date			String end date as YYYY-MM-DD (not inclusive)
+	 * @return TMDb result array
+	 */
+	public function getChangedMovies($page = 1, $start_date = NULL, $end_date = NULL)
+	{
+		$params = array(
+			'page' => (int) $page,
+			'start_date' => $start_date,
+			'end_date' => $end_date,
+		);
+		return $this->_makeCall('movie/changes', $params);
+	}
+
+	/**
 	 * Retrieve all basic information for a particular person
 	 *
 	 * @param int $id					TMDb person-id
@@ -373,6 +402,35 @@ class TMDb
 	public function getPersonImages($id)
 	{
 		return $this->_makeCall('person/'.$id.'/images');
+	}
+
+	/**
+	 * Retrieve changes for a particular person
+	 *
+	 * @param mixed $id					TMDb person-id
+	 * @return TMDb result array
+	 */
+	public function getPersonChanges($id)
+	{
+		return $this->_makeCall('person/'.$id.'/changes');
+	}
+
+	/**
+	 * Retrieve all id's from changed persons
+	 *
+	 * @param int $page					Number of the page with results (default first page)
+	 * @param string $start_date		String start date as YYYY-MM-DD
+	 * @param string $end_date			String end date as YYYY-MM-DD (not inclusive)
+	 * @return TMDb result array
+	 */
+	public function getChangedPersons($page = 1, $start_date = NULL, $end_date = NULL)
+	{
+		$params = array(
+			'page' => (int) $page,
+			'start_date' => $start_date,
+			'start_date' => $end_date,
+		);
+		return $this->_makeCall('person/changes', $params);
 	}
 
 	/**
