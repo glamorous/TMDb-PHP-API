@@ -2,7 +2,7 @@
 
 ## Why this class ##
 
-This class has been started with the old API version (2.1) because of the lack of a general and recent php class for TMDb in the time. The second reason why this class is made is very simple: I love the work they do at [TMDb](http://themoviedb.org). They provide a great API so everyone can use there database to make cool applications. Now there's a new API v3 and it's supported too. The old version you can find in a [different branch at github](https://github.com/glamorous/TMDb-PHP-API/tree/apiv2).
+This class has been started with the old API version (2.1) because of the lack of a general and recent php class for TMDb at the time. The second reason why this class is made is very simple: I love the work they do at [TMDb](http://themoviedb.org). They provide a great API so everyone can use their database to make cool applications. Now there's a new API v3 and it's supported too. The old version you can find on a [different branch at github](https://github.com/glamorous/TMDb-PHP-API/tree/apiv2).
 
 ## Requirements ##
 
