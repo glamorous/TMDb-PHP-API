@@ -6,9 +6,9 @@
  *
  * @author Jonas De Smet - Glamorous
  * @since 09.11.2009
- * @date 11.10.2012
+ * @date 16.11.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.4.0
+ * @version 1.5.0
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -22,9 +22,12 @@ class TMDb
 	const IMAGE_POSTER = 'poster';
 	const IMAGE_PROFILE = 'profile';
 
-	const API_URL = 'http://api.themoviedb.org/3/';
+	const API_VERSION = '3';
+	const API_URL = 'api.themoviedb.org';
+	const API_SCHEME = 'http://';
+	const API_SCHEME_SSL = 'https://';
 
-	const VERSION = '1.4.0';
+	const VERSION = '1.5.0';
 
 	/**
 	 * The API-key
@@ -55,6 +58,13 @@ class TMDb
 	protected $_session_id;
 
 	/**
+	 * API Scheme
+	 *
+	 * @var string
+	 */
+	protected $_apischeme;
+
+	/**
 	 * Default constructor
 	 *
 	 * @param string $apikey			API-key recieved from TMDb
@@ -62,9 +72,10 @@ class TMDb
 	 * @param boolean $config			Load the TMDb-config
 	 * @return void
 	 */
-	public function __construct($apikey, $default_lang = 'en', $config = FALSE)
+	public function __construct($apikey, $default_lang = 'en', $config = FALSE, $scheme = TMDb::API_SCHEME)
 	{
 		$this->_apikey = (string) $apikey;
+		$this->_apischeme = ($scheme == TMDb::API_SCHEME) ? TMDb::API_SCHEME : TMDb::API_SCHEME_SSL;
 		$this->setLang($default_lang);
 
 		if($config === TRUE)
@@ -775,7 +786,7 @@ class TMDb
 			$auth_array['session_id'] = $session_id;
 		}
 
-		$url = TMDb::API_URL.$function.'?'.http_build_query($auth_array, '', '&');
+		$url = $this->_apischeme.TMDb::API_URL.'/'.TMDb::API_VERSION.'/'.$function.'?'.http_build_query($auth_array, '', '&');
 
 		if($method === TMDb::GET)
 		{

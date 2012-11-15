@@ -170,11 +170,24 @@ With the new version of the API (v3) there aren't specific methods to track the 
 		$etag = $tmdb->getVersion('movie/550');
     ?>
 
+### HTTPS / SSL ###
+
+With the new version of the API (v3) there's support for SSL. This class supports working with `https` too.
+
+    <?php
+	    //Just add a TMDb constant from the class when you initialize the class.
+		$tmdb = new TMDb('API-key', 'en', FALSE, TMDb::API_SCHEME_SSL);
+    ?>
+
 ## Issues/Bugs ##
 
 It's always possible to find some issues. If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues). Please don't use this to ask question how to use this class. It's straight forward and easy to understand for everyone with a basic knowledge of PHP.
 
 ## Changelog ##
+
+**TMDb 1.5.0 - 16/11/2012**
+
+- [feature] Support for SSL
 
 **TMDb 1.4.0 - 11/10/2012**
 
