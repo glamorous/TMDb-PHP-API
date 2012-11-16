@@ -8,7 +8,7 @@
  * @since 09.11.2009
  * @date 16.11.2012
  * @copyright Jonas De Smet - Glamorous
- * @version 1.5.0
+ * @version 1.5.1
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
 
@@ -401,7 +401,7 @@ class TMDb
 		$params = array(
 			'language' => ($lang !== NULL) ? $lang : $this->getLang(),
 		);
-		return $this->_makeCall('movie/'.$id, $params);
+		return $this->_makeCall('person/'.$id.'/credits', $params);
 	}
 
 	/**
