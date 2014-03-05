@@ -1,12 +1,15 @@
 # TMDb PHP API #
 
-** !! IMPORTANT !! This class is not maintained anymore, because of the lack of time and better alternatives that fully support the TMDb API. **
+**!! IMPORTANT !! This class is not maintained anymore, because of the lack of time and better alternatives that fully support the TMDb API.**
 
-** Good alternatives: **
+**Good alternatives:**
 
-- ** [wtfzdotnet](https://github.com/wtfzdotnet/php-tmdb-api) and offers also a [Symphony bundle](https://github.com/wtfzdotnet/WtfzTmdbBundle)**
-- ** [kriboogh](https://github.com/kriboogh/TMDB4PHP)**
-- ** [Or other wrappers (and maybe in other languages)](http://www.themoviedb.org/documentation/api/wrappers-libraries) **
+- **[wtfzdotnet](https://github.com/wtfzdotnet/php-tmdb-api) and offers also a [Symphony bundle](https://github.com/wtfzdotnet/WtfzTmdbBundle)**
+- **[kriboogh](https://github.com/kriboogh/TMDB4PHP)**
+- **[Or other wrappers (and maybe in other languages)](http://www.themoviedb.org/documentation/api/wrappers-libraries)**
+
+
+---
 
 ## Why this class ##
 
