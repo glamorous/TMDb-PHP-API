@@ -4,7 +4,7 @@
 
 **Good alternatives:**
 
-- **[wtfzdotnet](https://github.com/wtfzdotnet/php-tmdb-api) and offers also a [Symphony bundle](https://github.com/wtfzdotnet/WtfzTmdbBundle)**
+- **[wtfzdotnet](https://github.com/wtfzdotnet/php-tmdb-api) and offers also a [Symphony2 bundle](https://github.com/wtfzdotnet/WtfzTmdbBundle)**
 - **[kriboogh](https://github.com/kriboogh/TMDB4PHP)**
 - **[Or other wrappers (and maybe in other languages)](http://www.themoviedb.org/documentation/api/wrappers-libraries)**
 
