@@ -1,0 +1,21 @@
+{
+    "name": "glamorous/TMDb-PHP-API",
+    "description": "PHP Class for using TMDb (themoviedb.org) API. Because of IMDB hasn't an API we provide this PHP5 class. It's pretty easy to recieve all information about a movie or an actor. No scraping needed.",
+    "keywords": ["tmdb", "api"],
+    "type": "library",
+    "homepage": "https://github.com/glamorous/TMDb-PHP-API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "glamorous",
+            "homepage": "https://github.com/glamorous/TMDb-PHP-API"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "classmap": ["src"]
+    }
+}
