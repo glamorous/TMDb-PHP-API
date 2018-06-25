@@ -16,6 +16,6 @@
         "ext-gd": "*"
     },
     "autoload": {
-        "classmap": ["src"]
+        "classmap": ["TMDb.php"]
     }
 }
